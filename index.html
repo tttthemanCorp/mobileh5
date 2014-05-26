@@ -104,8 +104,14 @@ $('.resizable').parent().rotatable();
         </div>
     </div>
 </div>
+<div>
+  <p>Capture a photo using camera</p>
+  <form action="upload.php" method="post" enctype="multipart/form-data">
+    <input type="file" name="file" accept="image/*" capture>
+    <input type="submit" name="upload" value="Upload">
+  </form>
+</div>
 
-  
 </body>
 
 
