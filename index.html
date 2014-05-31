@@ -112,26 +112,36 @@ $('.resizable').parent().rotatable();
   </form>
 </div>
 
-<video muted autoplay></video>
-<script>
-  var errorCallback = function(e) {
-    console.log('Reeeejected!', e);
-  };
-  navigator.getUserMedia  = navigator.getUserMedia ||
-                            navigator.webkitGetUserMedia ||
-                            navigator.mozGetUserMedia ||
-                            navigator.msGetUserMedia;
+<div>
+  <video muted autoplay></video>
+  <button id="stop-button">Stop</button>
+  <script>
+    var errorCallback = function(e) {
+      console.log('Reeeejected!', e);
+    };
+    navigator.getUserMedia  = navigator.getUserMedia ||
+                              navigator.webkitGetUserMedia ||
+                              navigator.mozGetUserMedia ||
+                              navigator.msGetUserMedia;
 
-  var video = document.querySelector('video');
+    var video = document.querySelector('video');
 
-  if (navigator.getUserMedia) {
-    navigator.getUserMedia({audio: true, video: true}, function(stream) {
-      video.src = window.URL.createObjectURL(stream);
-    }, errorCallback);
-  } else {
-    video.src = 'somevideo.webm'; // fallback.
-  }
-</script>
+    if (navigator.getUserMedia) {
+      navigator.getUserMedia({audio: true, video: true}, function(stream) {
+        video.src = window.URL.createObjectURL(stream);
+        document.querySelector('#stop-button').addEventListener('click', function(e) {
+          video.pause();
+          stream.stop();
+        }, false);
+      }, errorCallback);
+    } else {
+      video.src = 'somevideo.webm'; // fallback.
+    }
+
+
+  </script>
+</div>
+
 
 </body>
 
