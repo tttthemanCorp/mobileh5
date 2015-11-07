@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title>Mobile Html5 Test</title>
+  
+  <script type='text/javascript' src='http://code.jquery.com/jquery-1.8.3.js'></script>
+  <script type="text/javascript" src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+  <link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css">
+    
+  <script src="jquery.ui.touch-punch.js"></script>
+  
+  <style type='text/css'>
+    .draggable
+{
+    position: relative; 
+    display: -moz-inline-stack;
+    display: inline-block;
+    vertical-align: top;
+    zoom: 1;
+    *display: inline;   
+
+    cursor: hand; 
+    cursor: pointer;       
+}
+
+.resizable
+{
+    width: 100px;
+    height: 100px;
+    border: 1px solid #bb0000;   
+}
+.resizable img
+{
+    width: 100%;   
+}
+
+.ui-resizable-handle 
+{
+    background: #f5dc58;
+    border: 1px solid #FFF;
+    width: 9px;
+    height: 9px;
+    
+    z-index: 2;
+}
+.ui-resizable-se
+{
+    right: -5px;
+    bottom: -5px;
+}
+
+.ui-rotatable-handle 
+{
+    background: #f5dc58;
+    border: 1px solid #FFF;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -o-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    cursor: pointer;
+    
+    height:        10px;
+    left:          50%;
+    margin:        0 0 0 -5px;
+    position:      absolute;
+    top:           -5px;
+    width:         10px;
+}
+.ui-rotatable-handle.ui-draggable-dragging
+{
+    visibility:  hidden;
+}
+  </style>
+  
+
+
+<script type='text/javascript'>//<![CDATA[ 
+$(window).load(function(){
+$('.draggable').draggable();
+
+$('.resizable').resizable({
+    aspectRatio: true,
+    handles: 'ne, se, sw, nw'
+});
+
+$('.resizable').parent().rotatable();
+
+
+});//]]>  
+
+</script>
+
+
+</head>
+<body>
+  <div>
+    <img src="http://store.valvesoftware.com/images/sizing_chart_shirt.png" alt="" />
+  </div>
+  <div class="draggable">
+    <div class="rotatable">
+        <div class="resizable">
+            
+        </div>
+    </div>
+</div>
+<div>
+  <p>Capture a photo using camera － old way</p>
+  <form action="upload.php" method="post" enctype="multipart/form-data">
+    <input type="file" name="file" accept="image/*" capture>
+    <input type="submit" name="upload" value="Upload">
+  </form>
+</div>
+
+<div>
+  <video muted autoplay></video>
+  <button id="stop-button">Stop</button>
+  <script>
+    var errorCallback = function(e) {
+      console.log('Reeeejected!', e);
+    };
+    navigator.getUserMedia  = navigator.getUserMedia ||
+                              navigator.webkitGetUserMedia ||
+                              navigator.mozGetUserMedia ||
+                              navigator.msGetUserMedia;
+
+    var video = document.querySelector('video');
+
+    if (navigator.getUserMedia) {
+      navigator.getUserMedia({audio: true, video: true}, function(stream) {
+        video.src = window.URL.createObjectURL(stream);
+        document.querySelector('#stop-button').addEventListener('click', function(e) {
+          video.pause();
+          stream.stop();
+        }, false);
+      }, errorCallback);
+    } else {
+      video.src = 'somevideo.webm'; // fallback.
+    }
+
+
+  </script>
+</div>
+
+
+</body>
+
+
+</html>
